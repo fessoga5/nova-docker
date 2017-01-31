@@ -739,7 +739,9 @@ class DockerDriver(driver.ComputeDriver):
 
     def _create_container(self, instance, image_name, args):
         name = "nova-" + instance['uuid']
-        hostname = instance['name']
+        args.pop('hostname', None)
+        hostname = instance['hostname']
+        LOG.info(_('Hostname is: %s'), instance['hostname'], instance=instance)
         cpu_shares = args.pop('cpu_shares', None)
         network_disabled = args.pop('network_disabled', False)
         environment = args.pop('environment', None)
